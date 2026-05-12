@@ -1,0 +1,803 @@
+# Premium Modern Portfolio (Advanced Version)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Netrapal Mahour | Full Stack Developer</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:'Poppins',sans-serif;
+      background:#0b1120;
+      color:white;
+      overflow-x:hidden;
+      transition:0.4s;
+    }
+
+    body.light-mode{
+      background:#f4f7ff;
+      color:#111827;
+    }
+
+
+    /* ===== Scrollbar ===== */
+
+    ::-webkit-scrollbar{
+      width:10px;
+    }
+
+    ::-webkit-scrollbar-thumb{
+      background:linear-gradient(#00c6ff,#7f5af0);
+      border-radius:20px;
+    }
+
+    /* ===== Navbar ===== */
+
+    .navbar{
+      background:rgba(10,15,30,0.6);
+      backdrop-filter:blur(15px);
+      border-bottom:1px solid rgba(255,255,255,0.08);
+      padding:16px 0;
+    }
+
+    .light-mode .navbar{
+      background:rgba(255,255,255,0.7);
+    }
+
+    .navbar-brand{
+      color:#00c6ff !important;
+      font-size:30px;
+      font-weight:700;
+    }
+
+    .nav-link{
+      color:white !important;
+      margin-left:15px;
+      font-weight:500;
+      transition:0.3s;
+    }
+
+    .light-mode .nav-link{
+      color:#111827 !important;
+    }
+
+    .nav-link:hover{
+      color:#00c6ff !important;
+    }
+
+    /* ===== Hero ===== */
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::before{
+      content:'';
+      position:absolute;
+      width:500px;
+      height:500px;
+      background:#00c6ff;
+      border-radius:50%;
+      filter:blur(140px);
+      top:-150px;
+      right:-150px;
+      opacity:0.35;
+      animation:pulse 8s infinite alternate;
+    }
+
+    .hero::after{
+      content:'';
+      position:absolute;
+      width:400px;
+      height:400px;
+      background:#7f5af0;
+      border-radius:50%;
+      filter:blur(140px);
+      bottom:-150px;
+      left:-150px;
+      opacity:0.35;
+      animation:pulse 10s infinite alternate;
+    }
+
+    @keyframes pulse{
+      from{transform:scale(1);}
+      to{transform:scale(1.3);}
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+    }
+
+    .hero h1{
+      font-size:75px;
+      font-weight:700;
+      line-height:1.2;
+    }
+
+    .gradient-text{
+      background:linear-gradient(90deg,#00c6ff,#7f5af0);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .typing{
+      color:#00c6ff;
+      font-weight:600;
+    }
+
+    .hero p{
+      font-size:22px;
+      color:#cbd5e1;
+      margin-top:18px;
+    }
+
+    .light-mode .hero p{
+      color:#374151;
+    }
+
+    .btn-main{
+      background:linear-gradient(90deg,#00c6ff,#7f5af0);
+      color:white;
+      border:none;
+      padding:14px 34px;
+      border-radius:50px;
+      font-weight:600;
+      transition:0.4s;
+      text-decoration:none;
+      display:inline-block;
+    }
+
+    .btn-main:hover{
+      transform:translateY(-5px);
+      box-shadow:0 15px 35px rgba(0,198,255,0.4);
+      color:white;
+    }
+
+    .profile-img{
+      width:340px;
+      height:340px;
+      object-fit:cover;
+      border-radius:50%;
+      border:8px solid rgba(255,255,255,0.1);
+      box-shadow:0 25px 60px rgba(0,0,0,0.5);
+      animation:float 5s infinite ease-in-out;
+    }
+
+    @keyframes float{
+      0%,100%{transform:translateY(0);}
+      50%{transform:translateY(-20px);}
+    }
+
+    /* ===== Section ===== */
+
+    section{
+      padding:100px 0;
+      position:relative;
+      z-index:2;
+    }
+
+    .section-title{
+      text-align:center;
+      margin-bottom:70px;
+    }
+
+    .section-title h2{
+      font-size:55px;
+      font-weight:700;
+    }
+
+    /* ===== Cards ===== */
+
+    .glass-card{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      backdrop-filter:blur(12px);
+      border-radius:25px;
+      padding:35px;
+      transition:0.4s;
+      height:100%;
+    }
+
+    .light-mode .glass-card{
+      background:rgba(255,255,255,0.7);
+      color:#111827;
+    }
+
+    .glass-card:hover{
+      transform:translateY(-12px);
+      box-shadow:0 25px 50px rgba(0,0,0,0.25);
+    }
+
+    /* ===== Skills ===== */
+
+    .skill-box{
+      margin-bottom:25px;
+    }
+
+    .skill-box span{
+      display:flex;
+      justify-content:space-between;
+      margin-bottom:10px;
+      font-weight:500;
+    }
+
+    .progress{
+      height:12px;
+      border-radius:50px;
+      background:#1e293b;
+    }
+
+    .progress-bar{
+      background:linear-gradient(90deg,#00c6ff,#7f5af0);
+      border-radius:50px;
+    }
+
+    /* ===== Projects ===== */
+
+    .project-icon{
+      width:90px;
+      height:90px;
+      border-radius:25px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg,#00c6ff,#7f5af0);
+      font-size:38px;
+      margin-bottom:25px;
+    }
+
+    .project-link{
+      color:#00c6ff;
+      text-decoration:none;
+      font-weight:600;
+    }
+
+    /* ===== Contact ===== */
+
+    .contact-form input,
+    .contact-form textarea{
+      background:rgba(255,255,255,0.06);
+      border:none;
+      border-radius:16px;
+      color:white;
+      padding:16px;
+    }
+
+    .light-mode .contact-form input,
+    .light-mode .contact-form textarea{
+      background:#eef2ff;
+      color:#111827;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus{
+      box-shadow:none;
+      border:2px solid #00c6ff;
+      background:rgba(255,255,255,0.08);
+      color:white;
+    }
+
+    /* ===== Theme Button ===== */
+
+    .theme-btn{
+      width:50px;
+      height:50px;
+      border-radius:50%;
+      position:fixed;
+      bottom:25px;
+      right:25px;
+      border:none;
+      z-index:1000;
+      background:linear-gradient(90deg,#00c6ff,#7f5af0);
+      color:white;
+      font-size:22px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    /* ===== Footer ===== */
+
+    footer{
+      padding:30px 0;
+      background:#050816;
+      text-align:center;
+    }
+
+    .social-icons a{
+      color:white;
+      font-size:24px;
+      margin:0 12px;
+      transition:0.3s;
+    }
+
+    .social-icons a:hover{
+      color:#00c6ff;
+      transform:translateY(-5px);
+    }
+
+    /* ===== Responsive ===== */
+
+    @media(max-width:768px){
+
+      .hero{
+        text-align:center;
+        padding-top:120px;
+      }
+
+      .hero h1{
+        font-size:48px;
+      }
+
+      .hero p{
+        font-size:18px;
+      }
+
+      .profile-img{
+        width:250px;
+        height:250px;
+        margin-top:40px;
+      }
+
+      .section-title h2{
+        font-size:40px;
+      }
+
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+
+      <a class="navbar-brand" href="#">
+        Netrapal
+      </a>
+
+      <button class="navbar-toggler bg-light" data-bs-toggle="collapse" data-bs-target="#menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="menu">
+        <ul class="navbar-nav ms-auto">
+
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+
+  <!-- Hero -->
+
+  <section class="hero" id="home">
+
+    <div class="container">
+      <div class="row align-items-center">
+
+        <div class="col-lg-7 hero-content">
+
+          <h1>
+            Hi, I'm
+            <span class="gradient-text">Netrapal Mahour</span>
+          </h1>
+
+          <p>
+            I'm a <span class="typing"></span>
+          </p>
+
+          <div class="mt-4 d-flex gap-3 flex-wrap">
+
+            <a href="#projects" class="btn-main">
+              View Projects
+            </a>
+
+            <a href="#contact" class="btn btn-outline-light rounded-pill px-4 py-2">
+              Hire Me
+            </a>
+
+          </div>
+
+        </div>
+
+        <div class="col-lg-5 text-center">
+
+          <img src="img/Netru.jpg" class="profile-img" alt="Profile">
+
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- About -->
+
+  <section id="about">
+
+    <div class="container">
+
+      <div class="section-title">
+        <h2 class="gradient-text">About Me</h2>
+      </div>
+
+      <div class="glass-card text-center">
+
+        <p class="fs-5">
+         Passionate Java Full Stack Developer with knowledge of Java, Spring Boot, Hibernate, JDBC, Servlets, JSP, React.js, HTML, CSS, JavaScript, and MySQL. Experienced in developing responsive web applications, REST APIs, and CRUD-based projects with clean UI and smooth functionality. Also familiar with Android development using Kotlin and Firebase, with a focus on building user-friendly and efficient applications.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Skills -->
+
+  <section id="skills">
+
+    <div class="container">
+
+      <div class="section-title">
+        <h2 class="gradient-text">Skills</h2>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-6">
+
+          <div class="skill-box">
+            <span>HTML/CSS <b>95%</b></span>
+            <div class="progress">
+              <div class="progress-bar" style="width:95%"></div>
+            </div>
+          </div>
+
+           <div class="skill-box">
+            <span>React.js <b>90%</b></span>
+            <div class="progress">
+              <div class="progress-bar" style="width:95%"></div>
+            </div>
+          </div>
+
+           <div class="skill-box">
+            <span>Tailwind CSS / Material UI<b>95%</b></span>
+            <div class="progress">
+              <div class="progress-bar" style="width:95%"></div>
+            </div>
+          </div>
+
+          <div class="skill-box">
+            <span>JavaScript <b>85%</b></span>
+            <div class="progress">
+              <div class="progress-bar" style="width:85%"></div>
+            </div>
+          </div>
+
+          <div class="skill-box">
+            <span>Bootstrap <b>90%</b></span>
+            <div class="progress">
+              <div class="progress-bar" style="width:90%"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+          <div class="skill-box">
+            <span>Java/JSP <b>82%</b></span>
+            <div class="progress">
+              <div class="progress-bar" style="width:82%"></div>
+            </div>
+          </div>
+
+           <div class="skill-box">
+            <span>Spring Boot/ Hibernate <b>82%</b></span>
+            <div class="progress">
+              <div class="progress-bar" style="width:82%"></div>
+            </div>
+          </div>
+
+           <div class="skill-box">
+            <span>MySQL<b>85%</b></span>
+            <div class="progress">
+              <div class="progress-bar" style="width:82%"></div>
+            </div>
+          </div>
+
+          <div class="skill-box">
+            <span>Firebase <b>80%</b></span>
+            <div class="progress">
+              <div class="progress-bar" style="width:80%"></div>
+            </div>
+          </div>
+
+          <div class="skill-box">
+            <span>Android Studio <b>88%</b></span>
+            <div class="progress">
+              <div class="progress-bar" style="width:88%"></div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Projects -->
+
+  <section id="projects">
+
+    <div class="container">
+
+      <div class="section-title">
+        <h2 class="gradient-text">Projects</h2>
+      </div>
+
+      <div class="row g-4">
+
+        <div class="col-md-4">
+
+          <div class="glass-card">
+
+            <div class="project-icon">
+              <i class="bi bi-bank"></i>
+            </div>
+
+            <h4>ATM Machine</h4>
+
+            <p>
+              Java-based ATM system with deposit, withdraw and balance check features.
+            </p>
+
+            <a href="https://github.com/Netru-student-life/Atm_machin" target="_blank" class="project-link">
+              View Project →
+            </a>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+          <div class="glass-card">
+
+            <div class="project-icon">
+              <i class="bi bi-cloud-sun"></i>
+            </div>
+
+            <h4>Weather App</h4>
+
+            <p>
+              Responsive weather application with modern design and live weather API.
+            </p>
+
+            <a href="https://github.com/Netru-student-life/WeatheApp-" target="_blank" class="project-link">
+              View Project →
+            </a>
+
+          </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+          <div class="glass-card">
+
+            <div class="project-icon">
+              <i class="bi bi-globe"></i>
+            </div>
+
+            <h4>Modern Portfolio</h4>
+
+            <p>
+              Advanced animated portfolio website with glassmorphism and dark mode.
+            </p>
+
+            <a href="#" class="project-link">
+              Live Demo →
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Contact -->
+
+  <section id="contact">
+
+    <div class="container">
+
+      <div class="section-title">
+        <h2 class="gradient-text">Contact Me</h2>
+      </div>
+
+      <div class="row justify-content-center">
+
+        <div class="col-lg-7">
+
+          <div class="glass-card">
+
+            <form class="contact-form" id="contactForm">
+
+              <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Your Name" required>
+              </div>
+
+              <div class="mb-3">
+                <input type="email" class="form-control" placeholder="Your Email" required>
+              </div>
+
+              <div class="mb-3">
+                <textarea rows="5" class="form-control" placeholder="Your Message" required></textarea>
+              </div>
+
+              <button class="btn-main">
+                Send Message
+              </button>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Footer -->
+
+  <footer>
+
+    <p>
+      © 2026 Netrapal Mahour
+    </p>
+
+    <div class="social-icons mt-3">
+
+      <a href="https://github.com/Netru-student-life" target="_blank">
+        <i class="bi bi-github"></i>
+      </a>
+
+      <a href="https://linkedin.com/in/netrapal-mahour">
+        <i class="bi bi-linkedin"></i>
+      </a>
+
+      <a href="mailto:netrumahour2@gmail.com">
+        <i class="bi bi-envelope-fill"></i>
+      </a>
+
+    </div>
+
+  </footer>
+
+  <!-- Theme Button -->
+
+  <button class="theme-btn" id="themeBtn">
+    <i class="bi bi-moon-fill"></i>
+  </button>
+
+  <!-- Bootstrap -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+
+    // ===== Typing Effect =====
+
+    const typing = document.querySelector('.typing');
+
+    const words = [
+      'JavaFull Stack Web Developer',
+      'Android Developer',
+      'Web Designer',
+      'UI Creator'
+    ];
+
+    let wordIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    function typeEffect(){
+
+      const currentWord = words[wordIndex];
+
+      if(!isDeleting){
+        typing.textContent = currentWord.substring(0,charIndex++);
+      }
+      else{
+        typing.textContent = currentWord.substring(0,charIndex--);
+      }
+
+      if(charIndex === currentWord.length + 1){
+        isDeleting = true;
+        setTimeout(typeEffect,1000);
+        return;
+      }
+
+      if(charIndex === 0){
+        isDeleting = false;
+        wordIndex = (wordIndex + 1) % words.length;
+      }
+
+      setTimeout(typeEffect,isDeleting ? 60 : 120);
+
+    }
+
+    typeEffect();
+
+    // ===== Theme Toggle =====
+
+    const themeBtn = document.getElementById('themeBtn');
+
+    themeBtn.addEventListener('click',()=>{
+      document.body.classList.toggle('light-mode');
+    });
+
+    // ===== Contact Form =====
+
+    document.getElementById('contactForm').addEventListener('submit',function(e){
+
+      e.preventDefault();
+
+      alert('Message Sent Successfully!');
+
+      this.reset();
+
+    });
+
+  </script>
+
+</body>
+</html>
+```
+
